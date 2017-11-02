@@ -1,0 +1,19 @@
+{
+  "name": "ski",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "puppeteer": "^0.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git:ex0ns/MagicPass.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
