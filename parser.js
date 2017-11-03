@@ -1,5 +1,7 @@
+const http = require("superagent");
 const Station = require('./station');
 const puppeteer = require('puppeteer');
+const JSSoup = require('jssoup').default;
 
 class Parser {
   static async _loadAll(page) {
@@ -38,18 +40,28 @@ class Parser {
   }
 
   static async parse() {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto('https://snow.myswitzerland.com/bulletin_enneigement/');
     await page.click("#check02");
    
     await Parser._loadAll(page);
     const stations = await Parser._extractStationData(page);
-  
-    console.log(`${stations.length} station extracted`);
-    await browser.close();
-  
+
+    await browser.close();  
     return stations;
+  }
+
+  static async parseMagicPass() {
+    const MP_URL = "https://www.magicpass.ch/fr/stations/"
+    const response = await http.get(MP_URL);
+
+    const soup = new JSSoup(response.text)
+    
+    const mp_stations = soup.findAll('div', 'station-item');
+    return mp_stations.map((station) => {
+      return station.find('span', 'station-name').getText().trim();
+    });
   }
 }
 

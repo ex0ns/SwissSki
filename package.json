@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "puppeteer": "GoogleChrome/puppeteer"
+    "difflib": "^0.2.4",
+    "jssoup": "0.0.6",
+    "puppeteer": "GoogleChrome/puppeteer",
+    "superagent": "^3.8.0"
   },
   "devDependencies": {},
   "scripts": {
