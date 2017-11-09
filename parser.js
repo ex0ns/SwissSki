@@ -47,12 +47,12 @@ class Parser {
   }
 
   static async parse() {
-    const browser = await puppeteer.launch({headless: process.env.HEADLESS || false});
+    const browser = await puppeteer.launch({headless: process.env.HEADLESS || true});
     const page = await browser.newPage();
     await page.goto('https://snow.myswitzerland.com/bulletin_enneigement/');
     await page.click("#check02");
    
-    await Parser._loadAll(page);
+    //await Parser._loadAll(page);
     const stations = await Parser._extractStationData(page);
 
     await browser.close();  

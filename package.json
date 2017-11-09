@@ -6,6 +6,7 @@
   "dependencies": {
     "difflib": "^0.2.4",
     "jssoup": "0.0.6",
+    "node-telegram-bot-api": "^0.29.0",
     "puppeteer": "GoogleChrome/puppeteer",
     "superagent": "^3.8.0"
   },

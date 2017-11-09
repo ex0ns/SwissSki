@@ -1,5 +1,11 @@
+const Bot = require("./bot");
 const difflib = require('difflib');
 const Parser = require("./parser");
+
+
+function startBot() {
+  new Bot();
+}
 
 function renameStation(station) {
   const renames = {
@@ -44,6 +50,8 @@ async function start() {
 
   console.log(filtered)
   console.log(filtered.length)
+
+  await startBot();
 };
 
 
