@@ -3,8 +3,8 @@ const difflib = require('difflib');
 const Parser = require("./parser");
 
 
-function startBot() {
-  new Bot();
+async function startBot(stations) {
+  new Bot(stations);
 }
 
 function renameStation(station) {
@@ -48,10 +48,7 @@ async function start() {
     .map(station => renameStation(station))
     .filter(station => filterStations(station, mpStations));
 
-  console.log(filtered)
-  console.log(filtered.length)
-
-  await startBot();
+  await startBot(filtered);
 };
 
 

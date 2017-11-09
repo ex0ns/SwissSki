@@ -15,7 +15,7 @@ class Station {
   }
     
   toString() {
-    return `${self.name} ${self.temp} ${self.snow_slopes} ${self.snow_station} ${open_slopes}/${total_slopes}`;
+    return `${this.name} ${this.temp} ${this.snow_slopes} ${this.snow_station} ${this.open_slopes}/${this.total_slopes}`;
   }
     
 }
