@@ -24,6 +24,7 @@ class Parser {
       let temp = await station.$('.weather em');
       let snow = await station.$('td.info_set2 em');
       let snow_station = await station.$('td.info_set2 span');
+      let slopes = await station.$('td.info_set3 em');
       
       if(name)
         name = await page.evaluate((el) => el.innerText.trim(), name);
@@ -34,13 +35,19 @@ class Parser {
         snow = await page.evaluate((el) => el.innerText.trim(), snow)
       if(snow_station)
         snow_station = await page.evaluate((el) => el.innerText.replace('dans la station', '').trim(), snow_station)
-  
-      return new Station(name, temp, snow, snow_station);
+      if(slopes) {
+        slopes = await page.evaluate((el) => {
+          const results = /(\d+\/\d+)/g.exec(el.innerText);
+          if(results && results.length > 0) return results[0]
+          else return undefined;
+        }, slopes);
+      }
+      return new Station(name, temp, snow, snow_station, slopes);
     }));
   }
 
   static async parse() {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({headless: process.env.HEADLESS || false});
     const page = await browser.newPage();
     await page.goto('https://snow.myswitzerland.com/bulletin_enneigement/');
     await page.click("#check02");
