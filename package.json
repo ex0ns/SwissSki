@@ -10,8 +10,11 @@
     "puppeteer": "GoogleChrome/puppeteer",
     "superagent": "^3.8.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
   "scripts": {
+    "reload": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

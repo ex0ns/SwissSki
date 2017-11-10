@@ -1,8 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 
 class Bot  {
-  constructor(stations) {
-    const token = process.env.TELEGRAM_KEY;
+  constructor(token, stations) {
     this.bot = new TelegramBot(token, {polling: true});
 
     this.bot.onText(/5/, this.topFive.bind(this));
