@@ -26,8 +26,12 @@ class Station {
     } else throw new Exception("Invalid arguments");
   }
   
+  getStatusAndName() {
+    return `${emoji.get(this.open ?  'white_check_mark' : 'x')} ${this.name}`
+  }
+
   toString() {
-    return `${emoji.get(this.open ?  'white_check_mark' : 'x')} ${this.name} ${this.temp} ${this.snow_slopes}cm ${this.open_slopes}/${this.total_slopes}`;
+    return ` ${this.getStatusAndName()} ${this.temp} ${this.snow_slopes}cm ${this.open_slopes}/${this.total_slopes}`;
   }
   
   static compare(station, other) {

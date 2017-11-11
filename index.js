@@ -34,7 +34,7 @@ function filterStations(station, names) {
     }
   }
   
-  const matches = difflib.getCloseMatches(station.name, names);
+  const matches = difflib.getCloseMatches(station.name, names.toJS());
   const result = matches.length !== 0;
   
   return result;
@@ -49,8 +49,6 @@ async function start() {
   const filtered = allStations.slice()
     .map(station => renameStation(station))
     .filter(station => filterStations(station, mpStations));
-  
-  console.log(filtered);
 
   if(process.env.MP_TOKEN) {
     new Bot(process.env.MP_TOKEN, filtered);
