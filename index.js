@@ -1,6 +1,8 @@
 const Bot = require("./bot");
 const difflib = require('difflib');
 const Parser = require("./parser");
+const Station = require('./station');
+const { List } = require('immutable');
 
 function renameStation(station) {
   const renames = {
@@ -12,7 +14,10 @@ function renameStation(station) {
   }
   
   if(Object.keys(renames).indexOf(station.name) !== -1) {
-    station.name = renames[station.name];
+    const copy = Object.assign({}, station);
+    console.log(`Rename ${station.name} in ${station.name}`);
+    copy.name = renames[station.name];
+    return new Station(copy);
   }
   
   return station;
@@ -36,14 +41,17 @@ function filterStations(station, names) {
 }
 
 async function start() {
-  const allStations = await Parser.parse();
-  const mpStations = await Parser.parseMagicPass();
+  const allStations = List(await Parser.parse());
+  const mpStations = List(await Parser.parseMagicPass());
   
-  const filtered = allStations
+  console.log(`Got ${mpStations.size} stations from MagicPass`);
+
+  const filtered = allStations.slice()
     .map(station => renameStation(station))
     .filter(station => filterStations(station, mpStations));
   
-  console.log(`Parsed ${allStations.length} stations`);
+  console.log(filtered);
+
   if(process.env.MP_TOKEN) {
     new Bot(process.env.MP_TOKEN, filtered);
   }

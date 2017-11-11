@@ -1,18 +1,19 @@
+const Station = require("./station");
 const TelegramBot = require('node-telegram-bot-api');
 
 class Bot  {
   constructor(token, stations) {
     this.bot = new TelegramBot(token, {polling: true});
 
-    this.bot.onText(/5/, this.topFive.bind(this));
+    this.bot.onText(/top5/, this.topFive.bind(this));
     this.bot.onText(/.*/, this.other.bind(this));
 
     this.stations = stations;
-    console.log("Bot started");
+    console.log(`Bot started with ${stations.size} stations`);
   }
 
   topFive(msg) {
-    this.bot.sendMessage(msg.chat.id, "Top 5");
+    this.bot.sendMessage(msg.chat.id, this.stations.sort(Station.compare).slice(0, 5).map(station => station.toString()).join("\n"));
   }
 
   other(msg) {

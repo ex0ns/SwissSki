@@ -5,7 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "difflib": "^0.2.4",
+    "immutable": "^3.8.2",
     "jssoup": "0.0.6",
+    "moment": "^2.19.1",
+    "node-emoji": "^1.8.1",
     "node-telegram-bot-api": "^0.29.0",
     "puppeteer": "GoogleChrome/puppeteer",
     "superagent": "^3.8.0"
