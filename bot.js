@@ -10,8 +10,14 @@ class Bot  {
     this.bot.onText(/.*/, this.other.bind(this));
     this.bot.onText(/list/, this.list.bind(this));
 
-    this.stations = stations.sort(Station.compare);
+    this.setStations = this.setStations.bind(this);
+
+    this.setStations(stations);
     console.log(`Bot started with ${stations.size} stations`);
+  }
+
+  setStations(stations) {
+    this.stations = stations.sort(Station.compare);
   }
 
   topFive(msg) {

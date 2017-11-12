@@ -23,10 +23,10 @@ class Parser {
       let name = await station.$('.location h3');
       let temp = await station.$('.weather em');
       let snow = await station.$('td.info_set2 em');
-      let opening = await station.$('.season.info_set1 em');
       let snow_station = await station.$('td.info_set2 span');
       let slopes = await station.$('td.info_set3 em');
-      
+      let open = false;
+
       if(name)
         name = await page.evaluate((el) => el.innerText.trim(), name);
       else console.log(await page.evaluate((el) => el.innerHTML, station))
@@ -34,24 +34,20 @@ class Parser {
         temp = await page.evaluate((el) => el.innerText.trim(), temp);
       if(snow)
         snow = await page.evaluate((el) => el.innerText.trim(), snow);
-      if(opening) {
-        opening = await page.evaluate((el) => {
-          const data = el.innerText.split(' ');
-          console.log(el.innerText, data)
-          if(data.length) return data[0];
-          return undefined;
-        }, opening);
-      }
+     
+
       if(snow_station)
-        snow_station = await page.evaluate((el) => el.innerText.replace('dans la station', '').trim(), snow_station)
+        snow_station = await page.evaluate((el) => el.innerText.replace('dans la station', '').trim(), snow_station);
       if(slopes) {
+        open = await page.evaluate((el) => el.className.indexOf("open") !== -1, slopes);
         slopes = await page.evaluate((el) => {
           const results = /(\d+\/\d+)/g.exec(el.innerText.trim());
           if(results && results.length > 0) return results[0]
           else return undefined;
         }, slopes);
       }
-      return new Station(name, temp, snow, snow_station, slopes, opening);
+
+      return new Station(name, temp, snow, snow_station, slopes, open);
     }));
   }
 

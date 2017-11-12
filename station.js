@@ -1,10 +1,9 @@
 const emoji = require('node-emoji');
-const moment = require('moment');
 
 const THRESHOLD = 0.20;
 
 class Station {
-  constructor(name, temp, snow_slopes, snow_station, slopes, opening) {
+  constructor(name, temp, snow_slopes, snow_station, slopes, open) {
     if(typeof name === 'string') {
       this.name = name;
       this.temp = parseInt(temp.replace('°', ''));
@@ -17,9 +16,8 @@ class Station {
           this.total_slopes = parseInt(splitted[1]) || 0;
         }
       }
-      
-      const mom = moment(opening, "DD.MM.YYYY");
-      this.open = !mom.isValid();
+
+      this.open = open;
     } else if(typeof name === "object") {
       const other = name;
       for (let p in other) { this[p] = other[p]; }

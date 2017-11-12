@@ -3,6 +3,7 @@ const difflib = require('difflib');
 const Parser = require("./parser");
 const Station = require('./station');
 const { List } = require('immutable');
+const CronJob = require('cron').CronJob;
 
 function renameStation(station) {
   const renames = {
@@ -11,11 +12,10 @@ function renameStation(station) {
     
     'Les Mosses-La Lécherette': 'La Lécherette',
     'Leysin-Mosses-Lécherette': 'Les Mosses'
-  }
+  };
   
   if(Object.keys(renames).indexOf(station.name) !== -1) {
     const copy = Object.assign({}, station);
-    console.log(`Rename ${station.name} in ${station.name}`);
     copy.name = renames[station.name];
     return new Station(copy);
   }
@@ -40,7 +40,10 @@ function filterStations(station, names) {
   return result;
 }
 
-async function start() {
+let mpBot = undefined;
+let swissBot = undefined;
+
+async function parseData() {
   const allStations = List(await Parser.parse());
   const mpStations = List(await Parser.parseMagicPass());
   
@@ -50,18 +53,25 @@ async function start() {
     .map(station => renameStation(station))
     .filter(station => filterStations(station, mpStations));
 
+  return {full: allStations, mp: filtered};
+}
+
+new CronJob('00 */2 * * *', async () => await runBots()).start();
+
+async function runBots() {
+  const {full, mp} = await parseData();
   if(process.env.MP_TOKEN) {
-    new Bot(process.env.MP_TOKEN, filtered);
-  }
-  
-  if(process.env.TOKEN) {
-    new Bot(process.env.TOKEN, allStations);
+    if(mpBot) mpBot.setStations(mp);
+    else mpBot = new Bot(process.env.MP_TOKEN, mp);
+
+    if(swissBot) swissBot.setStations(mp);
+    else swissBot = new Bot(process.env.TOKEN, full);
   }
 };
 
 
 try {
-  start();
+  runBots();
 } catch(e) {
   console.error(e);
 }
