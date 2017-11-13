@@ -25,11 +25,11 @@ class Station {
   }
   
   getStatusAndName() {
-    return `${emoji.get(this.open ?  'white_check_mark' : 'x')} ${this.name}`
+    return `${emoji.get(this.open ?  'white_check_mark' : 'x')} ${this.name}`.trim();
   }
 
   toString() {
-    return ` ${this.getStatusAndName()} ${this.temp} ${this.snow_slopes}cm ${this.open_slopes}/${this.total_slopes}`;
+    return ` ${this.getStatusAndName()} ${this.temp} ${this.snow_slopes}cm ${this.open_slopes}/${this.total_slopes}`.trim();
   }
   
   static compare(station, other) {
