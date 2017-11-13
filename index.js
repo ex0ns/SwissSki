@@ -64,7 +64,7 @@ async function runBots() {
     if(mpBot) mpBot.setStations(mp);
     else mpBot = new Bot(process.env.MP_TOKEN, mp);
 
-    if(swissBot) swissBot.setStations(mp);
+    if(swissBot) swissBot.setStations(full);
     else swissBot = new Bot(process.env.TOKEN, full);
   }
 };
