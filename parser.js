@@ -3,6 +3,9 @@ const Station = require('./station');
 const puppeteer = require('puppeteer');
 const JSSoup = require('jssoup').default;
 
+
+const TIMEOUT = 1500;
+
 class Parser {
   static async _loadAll(page) {
     page.waitForNavigation({
@@ -12,7 +15,7 @@ class Parser {
     while (true) {
       try {
         var a = await page.click("#moreResult");
-        await page.waitFor(1500);
+        await page.waitFor(TIMEOUT);
       } catch ( e ) {
         break;
       }
