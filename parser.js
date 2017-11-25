@@ -78,18 +78,6 @@ class Parser {
     await browser.close();
     return stations;
   }
-
-  static async parseMagicPass() {
-    const MP_URL = "https://www.magicpass.ch/fr/stations/"
-    const response = await http.get(MP_URL);
-
-    const soup = new JSSoup(response.text)
-
-    const mp_stations = soup.findAll('div', 'station-item');
-    return mp_stations.map((station) => {
-      return station.find('span', 'station-name').getText().trim();
-    });
-  }
 }
 
 module.exports = Parser;
