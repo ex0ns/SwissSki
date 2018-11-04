@@ -13,7 +13,7 @@ class Bot extends Notification {
 
     this.bot.onText(/\/register/, this.register.bind(this));
     this.bot.onText(/\/unregister/, this.unregister.bind(this));
-    
+
     this.bot.onText(/top5/, this.topFive.bind(this));
     this.bot.onText(/where-to-ski/, this.top.bind(this));
     this.bot.onText(/.*/, this.other.bind(this));

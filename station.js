@@ -16,6 +16,10 @@ class Station {
           this.total_slopes = parseInt(splitted[1]) || 0;
         }
       }
+      else {
+          this.open_slopes = 0;
+          this.total_slopes = 0;
+      }
 
       this.open = open;
     } else if(typeof name === "object") {
@@ -29,21 +33,21 @@ class Station {
   }
 
   toString() {
-    return ` ${this.getStatusAndName()} ${this.temp} ${this.snow_slopes}cm ${this.open_slopes}/${this.total_slopes}`.trim();
+    return ` ${this.getStatusAndName()} ${this.temp}°C ${this.snow_slopes}cm ${this.open_slopes}/${this.total_slopes}`.trim();
   }
-  
+
   static compare(station, other) {
     if(station.open && !other.open) return -1;
     else if(other.open && !station.open) return 1;
-    
+
     if(!station.open_slopes && other.open_slopes) return 1;
     else if(!other.open_slopes && station.open_slopes) return -1;
     else if(!station.open_slopes && !other.open_slopes) return 0;
-    
+
     const diff = (station.open_slopes / station.total_slopes) - (other.open_slopes / other.total_slopes);
     if(diff > THRESHOLD) return -1
     else if(diff < -THRESHOLD) return 1;
-    
+
     if(station.snow_slopes > other.snow_slopes) return -1;
     return 0;
   }
