@@ -41,7 +41,6 @@ async function parseData() {
   const allStations = List(await Parser.parse());
   const filtered = allStations.slice()
     .filter(station => filterStations(station));
-
   return {
     full: allStations,
     mp: filtered
@@ -58,7 +57,9 @@ async function runBots() {
     } else {
       mpBot = new Bot(process.env.MP_TOKEN, mp);
     }
+  }
 
+  if (process.env.TOKEN) {
     if (swissBot) {
       swissBot.setStations(full);
     } else {
@@ -73,4 +74,3 @@ try {
 } catch ( e ) {
   console.error(e);
 }
-

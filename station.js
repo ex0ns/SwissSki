@@ -11,8 +11,8 @@ class Station {
       this.snow_station = parseInt(snow_station) || 0;
       if(slopes) {
         const splitted = slopes.split("\/");
-        if(splitted.length = 2) {
-          this.open_slopes = parseInt(splitted[0]) || 0;
+        if(splitted.length == 2) {
+          this.open_slopes = parseInt(splitted[0]) || 0;
           this.total_slopes = parseInt(splitted[1]) || 0;
         }
       }
@@ -27,7 +27,7 @@ class Station {
       for (let p in other) { this[p] = other[p]; }
     } else throw new Exception("Invalid arguments");
   }
-  
+
   getStatusAndName() {
     return `${emoji.get(this.open ?  'white_check_mark' : 'x')} ${this.name}`.trim();
   }
@@ -51,7 +51,7 @@ class Station {
     if(station.snow_slopes > other.snow_slopes) return -1;
     return 0;
   }
-  
+
 }
 
 module.exports = Station;
