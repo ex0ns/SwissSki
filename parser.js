@@ -50,7 +50,7 @@ class Parser {
       console.log("Visiting " + url);
 
       let name = await page.$('.PageHeader--title');
-      name = await page.evaluate(el => el.innerHTML.trim(), name);
+     name = await page.evaluate(el => el.innerHTML.trim(), name);
 
 
       let additional = await page.$('#articlesection-u19');
