@@ -52,10 +52,10 @@ class Bot extends Notification {
 
     list(msg) {
         const sender = msg.chat.id;
-        const response = this.stations.map((station) => station.getStatusAndName()).join("\n");
+        const response = this.stations.map((station) => station.getStatusAndName()).toArray();
 
-        if (response.length) {
-            this.bot.sendMessage(sender, response);
+        while (response.length) {
+            this.bot.sendMessage(sender, response.splice(0, 50).join('\n'));
         }
     }
 }
